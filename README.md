@@ -1,0 +1,2 @@
+# FIrstProjectMarkov
+Markov chain project
