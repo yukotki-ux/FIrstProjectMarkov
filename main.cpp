@@ -25,6 +25,9 @@ for (int i = 0; i < 20 && i < chainSize; i++) {
     std::cout << "[" << prefixes[i] << "] -> [" << suffixes[i] << "]" << std::endl;
 }
 
+for (int i = 0; i < 10; i++) {
+    std::cout << getRandomSuffix(prefixes, suffixes, chainSize, "the") << std::endl;
+}
 
 //     cout << "Please type filename, order, and maximum number or words." <<endl;
 //     cout <<"filename: ";
