@@ -3,10 +3,6 @@
 #include <cstdlib> 
 #include <string>
 
-int reviewScore(){
-    return 0;
-}
-
 std::string joinWords(const std::string words[], int startIndex, int count){
 
     std::string result = "";

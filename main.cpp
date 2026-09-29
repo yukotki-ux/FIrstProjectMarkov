@@ -4,78 +4,75 @@
 #include <cstdlib>
 #include <ctime>
 
-// using namespace std;
+using namespace std;
 
 int main(){
     srand(time(0));
-    std::string testWords[] = {"the", "cat", "sat", "down"};
-std::cout << joinWords(testWords, 0, 2) << std::endl;  // Should print: the cat
-std::cout << joinWords(testWords, 1, 3) << std::endl;  // Should print: cat sat down
 
-std::string words[1000];
-int count = readWordsFromFile("test.txt", words, 1000);
-std::cout << "Read " << count << " words" << std::endl;
-for (int i = 0; i < 10 && i < count; i++) {
-    std::cout << words[i] << std::endl;
+    const int MAX_WORDS = 5000;
+    const int MAX_PREFIXES = 5000;
+    const int MAX_SUFFIXES = 5000;
+
+    string words[MAX_WORDS];
+    string prefixes[MAX_PREFIXES];
+    string suffixes[MAX_SUFFIXES];
+
+    string filename;
+    int order;
+    int maxWords;
+
+    cout << "Please type filename, order, and maximum number or words." <<endl;
+    cout <<"filename: ";
+    cin >> filename;
+    cout <<"order: ";
+    while(!(cin >> order)||order < 1||order > 3){
+        cout << "Order must be 1 to 3. Please enter again." <<endl;
+        cin.clear(); //clear error
+        cin.ignore(1000, '\n'); //delete error history
+    }
+    cout <<"maximum number of words: ";
+    while(!(cin >> maxWords)||maxWords < order){
+        cout << "It is not valid number. Please enter again.";
+        cin.clear(); //clear error
+        cin.ignore(1000, '\n'); //delete error history
+    }
+    // Use a named capacity, for example const int MAX_WORDS = 5000; declare words, prefixes, and suffixes with that capacity. Pass the actual capacity to the functions. This project may train on only the first 5000 words of a larger file.
+    // Read the file. Explain a -1 result as a file-open failure. 
+
+int count = readWordsFromFile(filename, words, MAX_WORDS);
+if(count == -1){
+    cout << "A file cannot be opened." << endl;
+
+// If the count is <= order, explain that at least order + 1 training words are needed.
+} else if (count <= order){
+    cout << "At least " << order + 1 << " training words are needed." << endl;
+} else {
+// Build the chain and confirm chainSize > 0 before random selection.
+int chainSize = buildMarkovChain(words, count, order, prefixes, suffixes, MAX_PREFIXES);
+if(chainSize <= 0){
+    cout << "It can not work." << endl;
+} else {
+// If the input array filled to capacity, tell the user that at most MAX_WORDS input words were used and additional words, if any, were ignored.
+    if(count == MAX_WORDS){
+        cout << "At most " << MAX_WORDS << " input words were used and additional words, if any, were ignored." << endl;
+    }
+    string output = generateText(prefixes, suffixes, chainSize, order, maxWords);
+    cout << output << endl;
+
+    int outputCount = 0;
+    if (output != "") {
+        outputCount = 1;
+
+    for (int i = 0; i < output.length(); i++) {
+        if (output[i] == ' ') {
+            outputCount++;
+        }
+    }
 }
-
-std::string prefixes[1000], suffixes[1000];
-int chainSize = buildMarkovChain(words, count, 1, prefixes, suffixes, 1000);
-for (int i = 0; i < 20 && i < chainSize; i++) {
-    std::cout << "[" << prefixes[i] << "] -> [" << suffixes[i] << "]" << std::endl;
-}
-
-for (int i = 0; i < 10; i++) {
-    std::cout << getRandomSuffix(prefixes, suffixes, chainSize, "the") << std::endl;
-}
-
-for (int i = 0; i < 5; i++) {
-    std::cout << getRandomPrefix(prefixes, chainSize) << std::endl;
-}
-
-std::string output = generateText(prefixes, suffixes, chainSize, 1, 20);
-std::cout << output << std::endl;
-
-//     cout << "Please type filename, order, and maximum number or words." <<endl;
-//     cout <<"filename: ";
-//     cin >> filename >>endl;
-//     cout <<"order: ";
-//     cin >> order >>endl;
-//     if(!(cin>>order)||order<1||order>3||){
-//         cout << "It is not valid number. Please enter again.";
-//         cin >> order >>endl;
-//     }
-//     cout <<"maximum number of words: ";
-//     cin >> maxWords >>endl;
-//     if(!(cin >> maxWords)||maxWords < order){
-//         cout << "It is not valid number. Please enter again.";
-//         cin >> maxWords >>endl;
-//     }
-// const int MAX_WORDS = 5000;
-// const int MAX_PREFIXES = 5000;
-// const int MAX_SUFFIXES = 5000;
-//     // Use a named capacity, for example const int MAX_WORDS = 5000; declare words, prefixes, and suffixes with that capacity. Pass the actual capacity to the functions. This project may train on only the first 5000 words of a larger file.
-//     // Read the file. Explain a -1 result as a file-open failure. 
-// int readWordsFromFile(filename, words[], maxWords);
-// if(readWordsFromFile() = -1){
-//     cout << "file-open is failed." <<endl;
-// }
-   
-// std::string joinWords(const std::string words[], int startIndex, int count);
-
-// int buildMarkovChain(const std::string words[], int numWords, int order,
-//                      std::string prefixes[], std::string suffixes[],
-//                      int maxChainSize);
-
-// std::string getRandomSuffix(const std::string prefixes[], const std::string suffixes[],
-//                             int chainSize, std::string currentPrefix);
-
-// std::string getRandomPrefix(const std::string prefixes[], int chainSize);
-
-// std::string generateText(const std::string prefixes[], const std::string suffixes[],
-//                          int chainSize, int order, int numWords);
-
-
-
+cout << outputCount << " words" << endl;
+// If it is shorter than requested, explain that generation stopped at a dead end.
+if (outputCount < maxWords) {
+    cout << "Generation stopped at a dead end." << endl;
+}}}
 return 0;
 }
