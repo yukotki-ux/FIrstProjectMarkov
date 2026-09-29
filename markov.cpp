@@ -30,7 +30,7 @@ int readWordsFromFile(std::string filename, std::string words[], int maxWords){
         counter += 1;
     }
     inputFile.close();
-    return 0;
+    return counter;
 
 }
 
