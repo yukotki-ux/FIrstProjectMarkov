@@ -1,6 +1,11 @@
 #include "markov.h"
 #include <fstream>
+#include <cstdlib> 
 #include <string>
+
+int reviewScore(){
+    return 0;
+}
 
 std::string joinWords(const std::string words[], int startIndex, int count){
 
@@ -24,8 +29,8 @@ int readWordsFromFile(std::string filename, std::string words[], int maxWords){
     while (counter < maxWords && inputFile >> words[counter]){
         counter += 1;
     }
-    inputfile.close();
-    return i;
+    inputFile.close();
+    return 0;
 
 }
 
@@ -53,7 +58,7 @@ std::string getRandomSuffix(const std::string prefixes[], const std::string suff
                             int chainSize, std::string currentPrefix){
                             int matchCount = 0;
                             for(int i = 0; i < chainSize; i++){
-                                if (prefixes[i] == currentPrefix){　//check if this prefix is the one I'm looking for
+                                if (prefixes[i] == currentPrefix){//check if this prefix is the one I'm looking for
                                     matchCount += 1;
                                 }}
                             if (matchCount == 0 || chainSize <= 0){
@@ -67,11 +72,12 @@ std::string getRandomSuffix(const std::string prefixes[], const std::string suff
                                         return suffixes[i];
                                     }
                                 currentMatch += 1;
-                                }
+                                }}
+                            return "";
                             }
                         
 std::string getRandomPrefix(const std::string prefixes[], int chainSize){
-    if(chainSize <= 0){.  //Check for an empty chain before taking a remainder or indexing the array.
+    if(chainSize <= 0){//Check for an empty chain before taking a remainder or indexing the array.
         return "";
     }
     int index = rand() % chainSize;
@@ -89,7 +95,7 @@ std::string generateText(const std::string prefixes[], const std::string suffixe
                          std::string currentWords[3]; // supports the validated orders 1, 2, and 3
                             int wordIndex = 0;                                                                                                                                                                 
                             std::string temp = "";
-                            for (int i = 0; i < currentPrefix.length(); i++) {                                                                                                                                 
+                            for(int i = 0; i < chainSize; i++) {                                                                                                                                 
                                 if (currentPrefix[i] == ' ') {                                                                                                                                                 
                                     currentWords[wordIndex] = temp;                                                                                                                                            
                                     wordIndex++;                                                                                                                                                               
