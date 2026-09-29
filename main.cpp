@@ -32,6 +32,10 @@ for (int i = 0; i < 10; i++) {
 for (int i = 0; i < 5; i++) {
     std::cout << getRandomPrefix(prefixes, chainSize) << std::endl;
 }
+
+std::string output = generateText(prefixes, suffixes, chainSize, 1, 20);
+std::cout << output << std::endl;
+
 //     cout << "Please type filename, order, and maximum number or words." <<endl;
 //     cout <<"filename: ";
 //     cin >> filename >>endl;
