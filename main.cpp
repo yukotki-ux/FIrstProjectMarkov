@@ -63,7 +63,7 @@ if(chainSize <= 0){
     if (output != "") {
         outputCount = 1;
 
-    for (int i = 0; i < int output.length(); i++) {
+    for (int i = 0; i < static_cast<int>(output.length()); i++) {
         if (output[i] == ' ') {
             outputCount++;
         }

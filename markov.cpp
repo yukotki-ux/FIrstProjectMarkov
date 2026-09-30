@@ -91,7 +91,7 @@ std::string generateText(const std::string prefixes[], const std::string suffixe
                          std::string currentWords[3]; // supports the validated orders 1, 2, and 3
                             int wordIndex = 0;                                                                                                                                                                 
                             std::string temp = "";
-                            for(int i = 0; i < chainSize; i++) {                                                                                                                                 
+                            for(int i = 0; i < static_cast<int>(currentPrefix.length()); i++) {                                                                                                                                 
                                 if (currentPrefix[i] == ' ') {                                                                                                                                                 
                                     currentWords[wordIndex] = temp;                                                                                                                                            
                                     wordIndex++;                                                                                                                                                               
