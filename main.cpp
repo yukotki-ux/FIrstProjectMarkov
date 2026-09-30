@@ -21,7 +21,7 @@ int main(){
     int order;
     int maxWords;
 
-    cout << "Please type filename, order, and maximum number or words." <<endl;
+    cout << "Please type filename, order, and maximum number of words." <<endl;
     cout <<"filename: ";
     cin >> filename;
     cout <<"order: ";
